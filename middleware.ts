@@ -1,12 +1,14 @@
 import {NextRequest, NextResponse} from 'next/server'
 import Auth from "@/middleware/auth";
+import logMiddleware from "@/middleware/log";
 /**
  * 中间件
  * @param request
  */
 export async function middleware(request:NextRequest) {
     return chain([
-        Auth, // 验证
+        Auth, // 验证、
+        logMiddleware, // 日志
     ])(request)
 }
 

@@ -1,10 +1,10 @@
-
+import Login from "@/app/(auth)/login/login";
 
 
 export default function LoginPage() {
   return (
     <div className={"flex"}>
-      <h1>Login</h1>
+        <Login />
     </div>
   );
 }
