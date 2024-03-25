@@ -4,3 +4,8 @@ database:
   user: "root"
   password: ""
   name: "na"
+
+auth:
+  secret: "d5471b8b-4a33-4c9d-af7b-8b3b9b8a5ef3"
+  expire: '7d'
+  bcrypt: "d5471b8b-4a33-4c9d-af7b-8b3b9b8a5ef3"

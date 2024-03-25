@@ -4,11 +4,14 @@ import {createJSONStorage, persist} from "zustand/middleware";
 
 // 用户信息
 export type UserInfo = {
-    username: string;
-    nickname: string;
-    avatar: string;
-    email: string;
-    phone: string;
+    id: number
+    username: string
+    nickname: string
+    roleId: number
+    avatar: string
+    email: string
+    mobile: string
+    status: number
 }
 
 // 用户信息状态类型
@@ -48,11 +51,14 @@ export const useUserStore = create(
     persist<UserStore>(
         (set) => ({
             userInfo: {
+                id: 0,
                 username: "",
                 nickname: "",
                 avatar: "",
                 email: "",
-                phone: "",
+                mobile: "",
+                roleId: 0,
+                status: 0
             },
             setUserInfo: (userInfo: UserInfo) => set({userInfo}),
 

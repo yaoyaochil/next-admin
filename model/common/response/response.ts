@@ -1,4 +1,6 @@
 import {NextResponse} from "next/server";
+import { cookies } from 'next/headers'
+import {systemUser} from "@/model/system/user";
 
 export interface Response {
     code: number,
@@ -36,7 +38,6 @@ export async function okMsg(msg: string): Promise<NextResponse<Response>> {
 }
 
 
-
 /**
  * 成功并返回数据
  * @param data
@@ -55,4 +56,28 @@ export async function okData(data: any, msg: string, code: number = success): Pr
  */
 export async function failMsg(msg: string): Promise<NextResponse<Response>> {
     return result(error, msg, null)
+}
+
+/**
+ * 登陆 设置cookie
+ * @param token
+ * @param userInfo
+ */
+export async function AuthOA(token: string, userInfo: systemUser): Promise<NextResponse<Response>> {
+    cookies().set('token', token, {
+        httpOnly: true,
+        maxAge: 60 * 60 * 24 * 7,
+        path: '/',
+    })
+
+    cookies().set('ID', userInfo.id.toString(), {
+        httpOnly: true,
+        maxAge: 60 * 60 * 24 * 7,
+        path: '/',
+    })
+
+    return okData({
+        token:token,
+        userInfo:userInfo
+    }, '登录成功')
 }

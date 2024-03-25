@@ -1,8 +1,9 @@
 
 
 export interface systemUser {
+    id: number;
     username: string;
-    password: string;
+    password?: string;
     email: string;
     mobile: string;
     avatar: string;

@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
             avatar,
             status,
             roleId: 1,
-            roles: [role]
+            roles: [role] // 用户拥有的角色
         });
         return okMsg('注册成功');
     } catch (error) {
