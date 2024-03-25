@@ -19,7 +19,7 @@ export class UserEntity extends BaseEntity {
     @Column({comment: '手机号'})
     mobile!: string;
 
-    @Column({default: 'https://2.gravatar.com/userimage/246052877/856be483cd4f4b6df01060abef5ff896?size=256', comment: '头像'})
+    @Column({default: 'https://qnm.hunliji.com/o_1gppfo1lh1nkeg3v16aq34gvrbp.jpg', comment: '头像'})
     avatar!: string;
 
     @Column({default: 0, comment: '0: 正常, 1: 禁用'})

@@ -8,7 +8,7 @@ import {RoleEntity} from "@/model/entity/system/auth.entity";
 
 
 export async function POST(request: NextRequest) {
-    const {username, password, email, mobile, avatar, status} = await request.json();
+    const {username, password,nickname, email, mobile, avatar, status} = await request.json();
 
     if (!username || !password || !email || !mobile) {
         return failMsg('参数错误')
@@ -39,6 +39,7 @@ export async function POST(request: NextRequest) {
         await globalDataSource.manager.save(UserEntity, {
             username,
             password: encrypt(password),
+            nickname: nickname ? nickname:username,
             email,
             mobile,
             avatar,

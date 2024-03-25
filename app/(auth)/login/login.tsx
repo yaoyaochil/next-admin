@@ -2,7 +2,7 @@
 import {Button, Form, Input, type FormProps, message} from "antd";
 import {useState} from "react";
 import {useUserStore} from "@/store/useUserStore";
-
+import { useRouter } from 'next/navigation'
 type FormItem = {
     username: string;
     password: string;
@@ -12,7 +12,7 @@ export default function Login() {
     const setUserInfo = useUserStore(state => state.setUserInfo);
     const setToken = useUserStore(state => state.setToken);
     const [loading, setLoading] = useState(false);
-
+    const navigate = useRouter();
     /**
      * 登录
      * @param values
@@ -42,6 +42,7 @@ export default function Login() {
             });
             setToken(data.data.token);
             setLoading(false);
+            navigate.push("/admin/dashboard");
         } else {
             message.error(data.msg);
             setLoading(false);
