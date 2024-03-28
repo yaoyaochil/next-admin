@@ -30,6 +30,7 @@ export default function RootLayout({
                 itemHoverColor: "#ffffff",
                 itemSelectedColor: "#ffffff",
                 colorItemBgSelected: "#2f65cb",
+                itemActiveBg: "#2f65cb",
             }
         }
     }

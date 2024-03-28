@@ -2,8 +2,9 @@
 
 import {Avatar, Badge, styled} from "@mui/material";
 import {useUserStore} from "@/store/useUserStore";
-import LogOutIcon from "@/components/Icon/logOutIcon";
 import {SettingOutlined} from "@ant-design/icons";
+import {useEffect} from "react";
+import {systemUser} from "@/model/system/user";
 
 
 const StyledBadge = styled(Badge)(({theme}) => ({
@@ -39,6 +40,16 @@ const UserCardComponent = () => {
 
     const userInfo = useUserStore((state) => state.userInfo);
 
+    useEffect(() => {
+        async function fetchData() {
+            const res = await fetch('/api/system/user/getUserInfo');
+            const data:systemUser = await res.json()
+            if (data.code === 0) {
+                useUserStore.setState({userInfo: data.data})
+            }
+        }
+    },[])
+
     return (
         <div className={"flex justify-start items-center gap-3 h-full ml-3"}>
             <StyledBadge
@@ -51,10 +62,10 @@ const UserCardComponent = () => {
             <div className={"font-light mt-1"}>
                 <div
                     className={"text-user-name leading-user-name"}>{userInfo.nickname ? userInfo.nickname : 'loading'}</div>
-                <div className={"text-user-role leading-user-role"}>{userInfo.email}</div>
+                <div className={"text-user-roles leading-user-roles"}>{userInfo.email}</div>
             </div>
             <span
-                className={"ml-auto mr-6 rounded-full h-8 w-8 hover:bg-sidebar-item-hover active:scale-110 flex justify-center items-center cursor-pointer transition-colors delay-100"}>
+                className={"ml-auto mr-6 rounded-full h-8 w-8 hover:bg-sidebar-item-hover active:scale-90 flex justify-center items-center cursor-pointer transition-colors delay-100"}>
                 <SettingOutlined/>
             </span>
         </div>

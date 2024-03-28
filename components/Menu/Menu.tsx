@@ -1,15 +1,19 @@
+'use client'
 import {Typography} from "@mui/material";
-import React from "react";
+import React, {useEffect} from "react";
 import {Menu} from "antd";
 import type { MenuProps } from 'antd';
-import {DashboardOutlined, DashOutlined, SettingOutlined, UserOutlined} from "@ant-design/icons";
+import {DashboardOutlined, DashOutlined, UserOutlined} from "@ant-design/icons";
+import SettingIcon from "@/components/Icon/SettingIcon";
+import ChartIcon from "@/components/Icon/ChartIcon";
+import AuthIcon from "@/components/Icon/AuthIcon";
 const MenuComponent = () => {
 
     const Items:MenuProps['items'] = [
         {
             key: "1",
             label: "Dashboard",
-            icon: <DashboardOutlined />,
+            icon: <ChartIcon />,
             children: [
                 {
                     key: "1-1",
@@ -31,7 +35,7 @@ const MenuComponent = () => {
         {
             key: "2",
             label: "系统管理",
-            icon: <SettingOutlined />,
+            icon: <SettingIcon />,
             children: [
                 {
                     key: "2-1",
@@ -41,20 +45,24 @@ const MenuComponent = () => {
                 {
                     key: "2-2",
                     label: "角色管理",
-                    icon: <DashOutlined />
+                    icon: <AuthIcon />
                 },
                 {
                     key: "2-3",
                     label: "权限管理",
-                    icon: <DashOutlined />
+                    icon: <AuthIcon />
                 }
             ]
         }
     ]
 
+    useEffect(() => {
+        console.log("MenuComponent")
+    },[])
+
     return (
-        <div className={"w-full py-10"}>
-            <Typography variant="caption" className={"pt-4 pb-1 px-4 opacity-40"}>
+        <div className={"w-full py-6 overflow-scroll"}>
+            <Typography variant="caption" className={"pt-4 pb-1 px-7 opacity-40"}>
                 PAGES
             </Typography>
             <Menu mode={"inline"} items={Items} defaultSelectedKeys={['1-1']} defaultOpenKeys={['1']} />

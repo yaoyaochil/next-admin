@@ -30,16 +30,7 @@ export default function Login() {
         const data = await res.json();
         if (data.code === 0) {
             message.success(data.msg);
-            setUserInfo({
-                id: data.data.userInfo.id,
-                username: data.data.userInfo.username,
-                nickname: data.data.userInfo.nickname,
-                avatar: data.data.userInfo.avatar,
-                email: data.data.userInfo.email,
-                mobile: data.data.userInfo.mobile,
-                roleId: data.data.userInfo.roleId,
-                status: data.data.userInfo.status
-            });
+            setUserInfo(data.data.userInfo);
             setToken(data.data.token);
             setLoading(false);
             navigate.push("/admin/dashboard");

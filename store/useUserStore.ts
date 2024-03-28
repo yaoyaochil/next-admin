@@ -1,24 +1,12 @@
 import {create} from "zustand";
 import {createJSONStorage, persist} from "zustand/middleware";
-
-
-// 用户信息
-export type UserInfo = {
-    id: number
-    username: string
-    nickname: string
-    roleId: number
-    avatar: string
-    email: string
-    mobile: string
-    status: number
-}
+import {systemUser} from "@/model/system/user";
 
 // 用户信息状态类型
 export type UserStore = {
     // 用户信息
-    userInfo: UserInfo;
-    setUserInfo: (userInfo: UserInfo) => void;
+    userInfo: systemUser;
+    setUserInfo: (userInfo: systemUser) => void;
 
     // token
     token: string;
@@ -54,13 +42,14 @@ export const useUserStore = create(
                 id: 0,
                 username: "",
                 nickname: "",
-                avatar: "",
                 email: "",
                 mobile: "",
+                avatar: "",
+                status: 0,
                 roleId: 0,
-                status: 0
+                roles: [],
             },
-            setUserInfo: (userInfo: UserInfo) => set({userInfo}),
+            setUserInfo: (userInfo: systemUser) => set({userInfo}),
 
             token: "",
             setToken: (token: string) => set({token}),

@@ -30,7 +30,7 @@ const config: Config = {
       screens: {
         'sm': '0px',
         'md': '600px',
-        'lg': '1536px',
+        'lg': '960px',
       },
       width: {
         'sidebar': '240px',

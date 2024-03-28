@@ -13,6 +13,9 @@ export class RoleEntity extends BaseEntity {
     @Column({comment: '角色描述'})
     description!: string
 
+    @Column({comment: '默认页面'})
+    defaultPage!: string
+
     @ManyToMany(() => UserEntity, user => user.roles)
     @JoinTable({
         name: 'sys_user_role',
@@ -65,7 +68,7 @@ export class MenuEntity extends BaseEntity {
     @Column({comment: '菜单名称'})
     name!: string
 
-    @Column({comment: '菜单路径'})
+    @Column({comment: '菜单路径', unique: true})
     path!: string
 
     @Column({comment: '菜单图标'})
