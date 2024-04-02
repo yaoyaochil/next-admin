@@ -7,19 +7,6 @@ export type UserStore = {
     // 用户信息
     userInfo: systemUser;
     setUserInfo: (userInfo: systemUser) => void;
-
-    // token
-    token: string;
-    setToken: (token: string) => void;
-
-    // 登录
-    login: (username: string, password: string) => Promise<void>;
-
-    // 注销
-    logout: () => void;
-
-    // 注册
-    register: (username: string, password: string) => Promise<void>;
 }
 
 
@@ -50,16 +37,6 @@ export const useUserStore = create(
                 roles: [],
             },
             setUserInfo: (userInfo: systemUser) => set({userInfo}),
-
-            token: "",
-            setToken: (token: string) => set({token}),
-
-            login: async (username: string, password: string) => {
-            },
-            logout: () => {
-            },
-            register: async (username: string, password: string) => {
-            },
         }),
         {
             name: "user-store", // 存储的键名

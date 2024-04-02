@@ -6,10 +6,10 @@ import {okData} from "@/model/common/response/response";
 
 export async function GET(request: NextRequest) {
     // 获取cookie
-    const user_id = parseInt(<string>request.cookies.get('ID')?.value);
+    const user_id = request.cookies.get('user_id');
 
     const user = await globalDataSource.manager.findOne(UserEntity, {
-        where: {id: user_id},
+        where: {uuid: user_id as unknown as string},
         // 关联查询
         relations: ['roles', 'roles.menus']
     });

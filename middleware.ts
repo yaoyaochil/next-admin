@@ -1,13 +1,15 @@
 import {NextRequest, NextResponse} from 'next/server'
-import Auth from "@/middleware/auth";
 import logMiddleware from "@/middleware/log";
+import NextAuth from "next-auth";
+import {authConfig} from "@/auth.config";
+
 /**
  * 中间件
  * @param request
  */
 export async function middleware(request:NextRequest) {
     return chain([
-        Auth, // 验证、
+        NextAuth(authConfig).auth, // 认证 - 用于登录 - 退出登录 权限验证
         logMiddleware, // 日志
     ])(request)
 }
@@ -26,4 +28,8 @@ function chain(functions: Function[],index:number = 0) {
     }
     // 换言之 - 直接执行下一个函数
     return () => NextResponse.next(); // 返回一个空函数 - 用于结束链式调用 - 也就是说，如果没有下一个函数了，就返回一个空函数
+}
+
+export const config = {
+    matcher: ["/((?!api/auth|_next/static|_next/image|favicon.ico).*)"],
 }

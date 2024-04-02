@@ -6,6 +6,6 @@ database:
   name: "na"
 
 auth:
-  secret: "d5471b8b-4a33-4c9d-af7b-8b3b9b8a5ef3"
+  secret: "d0GKT6mfr5Nf/VSqBvNFfN5gaZ8KOiLdKaJ1aqQGLeQ="
   expire: '7d'
-  bcrypt: "d5471b8b-4a33-4c9d-af7b-8b3b9b8a5ef3"
+  bcrypt: "m8c0wJ84QPgG54AqWKvys9eIb9kvtXga01VzUrqUxHE="

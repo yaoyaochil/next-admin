@@ -1,7 +1,9 @@
+'use client'
 import PowerIcon from "@/components/Icon/PowerIcon";
 import MenuIcon from "@/components/Icon/MenuIcon";
 import {Breadcrumb} from "antd";
 import {ItemType} from "antd/es/breadcrumb/Breadcrumb";
+import {logout} from "@/lib/actions";
 
 
 const HeaderComponent = () => {
@@ -29,7 +31,10 @@ const HeaderComponent = () => {
                 <Breadcrumb items={items} />
             </div>
             <span
-                className={"ml-auto mr-10 flex justify-center items-center rounded-full hover:bg-gray-100 active:scale-90 p-3 cursor-pointer"}>
+                className={"ml-auto mr-10 flex justify-center items-center rounded-full hover:bg-gray-100 active:scale-90 p-3 cursor-pointer"} onClick={async () => {
+                    await logout()
+                    localStorage.clear()
+            }}>
                 <PowerIcon className={"text-footer-text"}/>
             </span>
         </div>

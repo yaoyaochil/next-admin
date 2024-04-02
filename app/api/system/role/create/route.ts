@@ -1,52 +1,41 @@
 import {NextRequest} from "next/server";
 import {failMsg, okMsg} from "@/model/common/response/response";
-import {globalDataSource} from "@/lib/db";
-import {MenuEntity} from "@/model/entity/system/auth.entity";
+import {MenuEntity, RoleEntity} from "@/model/entity/system/auth.entity";
 import {z} from "zod";
+import {createDataSource} from "@/lib/db";
 
-type MenuData = {
-    name: string,
-    path: string,
-    icon: string,
-    parentId: number,
-    sort: number,
-    type: number
-}
 
-const MenuDataSchema = z.object({
+const RoleSchema = z.object({
     name: z.string(),
-    path: z.string(),
-    icon: z.string(),
-    parentId: z.number(),
-    sort: z.number(),
-    type: z.number()
+    description: z.string(),
+    defaultPage: z.string()
 })
 
 export async function POST(request: NextRequest) {
-    const data = await request.json() as MenuData;
+    const data = await request.json();
 
     // check fields
-    if (!MenuDataSchema.safeParse(data).success) {
+    if (!RoleSchema.safeParse(data).success) {
         return failMsg('参数错误')
     }
 
-    const isExist = await globalDataSource.manager.findOne(MenuEntity, {
+    const globalDataSource = await createDataSource();
+    const isExist = await globalDataSource.manager.findOne(RoleEntity, {
         where: {
-            path: data.path
+            name: data.name
         }
     })
 
     if (isExist) {
-        return failMsg('菜单路径重复')
+        return failMsg('角色已存在')
     }
 
     try {
         // 保存菜单到数据库 save menu to database
-        await globalDataSource.manager.save(MenuEntity, {
+        await globalDataSource.manager.save(RoleEntity, {
             ...data
         });
     } catch (error) {
-        console.error(error)
         return failMsg('创建失败')
     }
 

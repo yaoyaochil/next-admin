@@ -6,11 +6,11 @@ import {useRouter} from "next/navigation";
 
 export default function NotFound() {
 
+
     const navigate = useRouter()
 
-
     return (
-        <div className={"flex flex-col justify-center items-center h-screen w-screen"}>
+        <div className={"flex flex-col justify-center items-center h-full w-full"}>
             <div className={"flex flex-col justify-center items-center"}>
                 <Typography variant="h3" className={"text-center mt-20"}>
                     404

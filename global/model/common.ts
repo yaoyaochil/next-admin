@@ -3,8 +3,8 @@ import {CreateDateColumn, DeleteDateColumn, Entity, PrimaryGeneratedColumn, Upda
 
 @Entity()
 export class BaseEntity {
-    @PrimaryGeneratedColumn()
-    id!: number;
+    @PrimaryGeneratedColumn('uuid')
+    id!: string;
 
     @CreateDateColumn()
     createdAt!: Date;

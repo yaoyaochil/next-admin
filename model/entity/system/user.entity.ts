@@ -26,7 +26,7 @@ export class UserEntity extends BaseEntity {
     status!: number;
 
     @Column({comment: '当前角色id'})
-    roleId!: number;
+    roleId!: string;
 
     @ManyToMany(() => RoleEntity, role => role.users)
     roles!: RoleEntity[]

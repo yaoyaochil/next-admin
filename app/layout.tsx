@@ -2,8 +2,9 @@ import type {Metadata} from "next";
 import {Inter} from "next/font/google";
 import "./globals.css";
 import {AntdRegistry} from '@ant-design/nextjs-registry';
-import {ConfigProvider} from "antd";
+import {App, ConfigProvider} from "antd";
 import {ThemeConfig} from "antd/es/config-provider/context";
+import {SessionProvider} from "next-auth/react";
 
 const inter = Inter({subsets: ["latin"]});
 
@@ -19,7 +20,7 @@ export default function RootLayout({
 }>) {
 
 
-    const theme:ThemeConfig = {
+    const theme: ThemeConfig = {
         components: {
             Menu: {
                 itemBg: "#376fd0",
@@ -29,18 +30,27 @@ export default function RootLayout({
                 itemColor: "rgba(255, 255, 255, 0.7)",
                 itemHoverColor: "#ffffff",
                 itemSelectedColor: "#ffffff",
-                colorItemBgSelected: "#2f65cb",
+                itemSelectedBg: "#2f65cb",
                 itemActiveBg: "#2f65cb",
             }
         }
     }
 
+    // 获取当前用户信息
+
     return (
         <html lang="zh">
         <body className={inter.className}>
         <AntdRegistry>
+
             <ConfigProvider theme={theme}>
-            {children}
+                <App>
+                    <SessionProvider>
+
+                        {children}
+
+                    </SessionProvider>
+                </App>
             </ConfigProvider>
         </AntdRegistry>
         </body>

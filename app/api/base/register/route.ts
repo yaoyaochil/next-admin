@@ -1,9 +1,9 @@
 import {NextRequest} from "next/server";
 import {failMsg, okMsg} from "@/model/common/response/response";
-import {globalDataSource} from "@/lib/db";
 import {UserEntity} from "@/model/entity/system/user.entity";
 import {encrypt} from "@/utils/bcrypt";
 import {RoleEntity} from "@/model/entity/system/auth.entity";
+import {createDataSource} from "@/lib/db";
 
 
 
@@ -13,9 +13,9 @@ export async function POST(request: NextRequest) {
     if (!username || !password || !email || !mobile) {
         return failMsg('参数错误')
     }
-
+    const globalDataSource = await createDataSource();
     // 获取角色
-    const role = await globalDataSource.manager.findOne(RoleEntity, {where: {id: 1}})
+    const role = await globalDataSource.manager.findOne(RoleEntity, {where: {id: "ddb16f12-9f54-41bf-a9e5-d7dd625c36b6"}})
     if (!role) {
         return failMsg('注册失败, 需要的角色不存在')
     }
@@ -44,7 +44,7 @@ export async function POST(request: NextRequest) {
             mobile,
             avatar,
             status,
-            roleId: 1,
+            roleId: "b48fb085-b3a2-45cb-8aa4-65d2912b5b8c",
             roles: [role] // 用户拥有的角色
         });
         return okMsg('注册成功');

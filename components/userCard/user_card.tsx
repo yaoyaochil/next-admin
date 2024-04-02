@@ -5,6 +5,7 @@ import {useUserStore} from "@/store/useUserStore";
 import {SettingOutlined} from "@ant-design/icons";
 import {useEffect} from "react";
 import {systemUser} from "@/model/system/user";
+import {getSession} from "next-auth/react";
 
 
 const StyledBadge = styled(Badge)(({theme}) => ({
@@ -35,19 +36,27 @@ const StyledBadge = styled(Badge)(({theme}) => ({
         },
     },
 }));
-
+const session = getSession()
 const UserCardComponent = () => {
-
     const userInfo = useUserStore((state) => state.userInfo);
 
-    useEffect(() => {
-        async function fetchData() {
-            const res = await fetch('/api/system/user/getUserInfo');
-            const data:systemUser = await res.json()
-            if (data.code === 0) {
-                useUserStore.setState({userInfo: data.data})
-            }
+    const getUserInfo = async () => {
+        const userSession = await session
+
+        if (userSession) {
+            const userInfo = await fetch(`/api/system/user/getUserInfoById`, {
+                method: 'POST',
+                body: JSON.stringify({id: userSession.user?.id}),
+            })
+            const data = await userInfo.json()
+            useUserStore.setState({userInfo: data.data as systemUser})
         }
+
+        return null
+    }
+
+    useEffect(() => {
+        getUserInfo()
     },[])
 
     return (
@@ -62,7 +71,7 @@ const UserCardComponent = () => {
             <div className={"font-light mt-1"}>
                 <div
                     className={"text-user-name leading-user-name"}>{userInfo.nickname ? userInfo.nickname : 'loading'}</div>
-                <div className={"text-user-roles leading-user-roles"}>{userInfo.email}</div>
+                <div className={"text-user-role leading-user-role"}>{userInfo.email}</div>
             </div>
             <span
                 className={"ml-auto mr-6 rounded-full h-8 w-8 hover:bg-sidebar-item-hover active:scale-90 flex justify-center items-center cursor-pointer transition-colors delay-100"}>

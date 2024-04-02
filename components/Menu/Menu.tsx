@@ -57,7 +57,6 @@ const MenuComponent = () => {
     ]
 
     useEffect(() => {
-        console.log("MenuComponent")
     },[])
 
     return (
