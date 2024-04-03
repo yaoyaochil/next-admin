@@ -1,4 +1,9 @@
 
+
+async function startApp() {
+    console.log('Hello NextAdmin')
+}
+
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col">

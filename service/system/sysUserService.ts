@@ -1,34 +1,31 @@
-'use server'
-
-import {createDataSource} from "@/lib/db";
 import {UserEntity} from "@/model/entity/system/user.entity";
+import {globalDB} from "@/database/connections";
 
 
 export const getUserInfoById = async (id: string) => {
-    const globalDataSource = await createDataSource()
+    const db = await globalDB()
     try {
-        const user = await globalDataSource.manager.findOne(UserEntity, {
+        return await db.getRepository(UserEntity).findOne({
             where: {
                 id: id
             },
             relations: ['roles', 'roles.menus', 'roles.apis']
         })
-        return user
     } catch (e) {
         throw new Error('获取用户信息失败')
     }
 }
-
 export const getUserInfoByUsername = async (username: string) => {
-    const globalDataSource = await createDataSource()
+    const db = await globalDB()
     try {
-        return await globalDataSource.manager.findOne(UserEntity, {
+        return await db.manager.findOne(UserEntity, {
             where: {
                 username: username
             },
             relations: ['roles', 'roles.menus', 'roles.apis']
         })
     } catch (e) {
+        console.log(e)
         throw new Error('获取用户信息失败')
     }
 }

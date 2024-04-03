@@ -1,8 +1,8 @@
 import {NextRequest} from "next/server";
 import {failMsg, okMsg} from "@/model/common/response/response";
-import {MenuEntity, RoleEntity} from "@/model/entity/system/auth.entity";
+import {RoleEntity} from "@/model/entity/system/auth.entity";
 import {z} from "zod";
-import {createDataSource} from "@/lib/db";
+import {globalDB} from "@/database/connections";
 
 
 const RoleSchema = z.object({
@@ -18,9 +18,8 @@ export async function POST(request: NextRequest) {
     if (!RoleSchema.safeParse(data).success) {
         return failMsg('参数错误')
     }
-
-    const globalDataSource = await createDataSource();
-    const isExist = await globalDataSource.manager.findOne(RoleEntity, {
+    const db = await globalDB()
+    const isExist = await db.manager.findOne(RoleEntity, {
         where: {
             name: data.name
         }
@@ -32,7 +31,7 @@ export async function POST(request: NextRequest) {
 
     try {
         // 保存菜单到数据库 save menu to database
-        await globalDataSource.manager.save(RoleEntity, {
+        await db.manager.save(RoleEntity, {
             ...data
         });
     } catch (error) {

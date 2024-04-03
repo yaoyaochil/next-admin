@@ -2,10 +2,11 @@
 
 import {Avatar, Badge, styled} from "@mui/material";
 import {useUserStore} from "@/store/useUserStore";
-import {SettingOutlined} from "@ant-design/icons";
+import {LoadingOutlined, SettingOutlined} from "@ant-design/icons";
 import {useEffect} from "react";
 import {systemUser} from "@/model/system/user";
 import {getSession} from "next-auth/react";
+import {Spin} from "antd";
 
 
 const StyledBadge = styled(Badge)(({theme}) => ({
@@ -70,7 +71,10 @@ const UserCardComponent = () => {
             </StyledBadge>
             <div className={"font-light mt-1"}>
                 <div
-                    className={"text-user-name leading-user-name"}>{userInfo.nickname ? userInfo.nickname : 'loading'}</div>
+                    className={"text-user-name leading-user-name"}>
+                    {userInfo.nickname ? userInfo.nickname :
+                        <Spin indicator={<LoadingOutlined style={{fontSize: 24,color: "#fff"}} spin />} />
+                    }</div>
                 <div className={"text-user-role leading-user-role"}>{userInfo.email}</div>
             </div>
             <span

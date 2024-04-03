@@ -1,8 +1,8 @@
 import {NextRequest} from "next/server";
 import {failMsg, okMsg} from "@/model/common/response/response";
-import {globalDataSource} from "@/lib/db";
 import {MenuEntity} from "@/model/entity/system/auth.entity";
 import {z} from "zod";
+import {globalDB} from "@/database/connections";
 
 type MenuData = {
     name: string,
@@ -23,28 +23,25 @@ const MenuDataSchema = z.object({
 })
 
 export async function POST(request: NextRequest) {
-    const data = await request.json() as MenuData;
-
+    const data = await request.json();
+    const db = await globalDB()
     // check fields
     if (!MenuDataSchema.safeParse(data).success) {
         return failMsg('参数错误')
     }
 
-    const isExist = await globalDataSource.manager.findOne(MenuEntity, {
+    const isExist = await db.getRepository(MenuEntity).findOne({
         where: {
             path: data.path
         }
     })
-
     if (isExist) {
         return failMsg('菜单路径重复')
     }
 
     try {
         // 保存菜单到数据库 save menu to database
-        await globalDataSource.manager.save(MenuEntity, {
-            ...data
-        });
+        await db.getRepository(MenuEntity).save(data)
     } catch (error) {
         console.error(error)
         return failMsg('创建失败')

@@ -1,14 +1,14 @@
 import {NextRequest} from "next/server";
 import {UserEntity} from "@/model/entity/system/user.entity";
 import {failMsg, okData} from "@/model/common/response/response";
-import {createDataSource} from "@/lib/db";
+import {globalDB} from "@/database/connections";
 
 
 export async function POST(request: NextRequest) {
     const {id} = await request.json();
 
-    const globalDataSource = await createDataSource();
-    const user = await globalDataSource.manager.findOne(UserEntity, {
+    const db = await globalDB()
+    const user = await db.manager.findOne(UserEntity, {
         where: {
             id: id
         },
